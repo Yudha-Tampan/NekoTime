@@ -1,571 +1,373 @@
 <!DOCTYPE html>
 <html lang="id" data-theme="dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NekoTime — Jadwal Anime</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#080810"/>
+  <title>NekoTime — Anime Premium</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: {
-            display: ['Syne', 'sans-serif'],
-            body: ['DM Sans', 'sans-serif'],
-          },
-          colors: {
-            neko: {
-              50: '#fff0f9',
-              100: '#ffdcf3',
-              200: '#ffbce8',
-              300: '#ff8fd5',
-              400: '#ff52bc',
-              500: '#ff1fa3',
-              600: '#f0008a',
-              700: '#c90073',
-              800: '#a6005f',
-              900: '#890051',
-            },
-            dark: {
-              50: '#f8f8f8',
-              100: '#ececec',
-              200: '#d4d4d4',
-              300: '#ababab',
-              400: '#6e6e6e',
-              500: '#3d3d3d',
-              600: '#2a2a2a',
-              700: '#1e1e1e',
-              800: '#141414',
-              900: '#0a0a0a',
-              950: '#050505',
-            }
-          },
-          animation: {
-            'pulse-slow': 'pulse 3s ease-in-out infinite',
-            'float': 'float 6s ease-in-out infinite',
-            'shimmer': 'shimmer 1.5s infinite',
-            'slide-up': 'slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-            'slide-down': 'slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-            'fade-in': 'fadeIn 0.3s ease',
-            'scale-in': 'scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
-          },
-          keyframes: {
-            float: { '0%, 100%': { transform: 'translateY(0px)' }, '50%': { transform: 'translateY(-8px)' } },
-            shimmer: { '0%': { backgroundPosition: '-200% 0' }, '100%': { backgroundPosition: '200% 0' } },
-            slideUp: { '0%': { transform: 'translateY(20px)', opacity: '0' }, '100%': { transform: 'translateY(0)', opacity: '1' } },
-            slideDown: { '0%': { transform: 'translateY(-20px)', opacity: '0' }, '100%': { transform: 'translateY(0)', opacity: '1' } },
-            fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
-            scaleIn: { '0%': { transform: 'scale(0.92)', opacity: '0' }, '100%': { transform: 'scale(1)', opacity: '1' } },
-          },
-          backdropBlur: { xs: '2px' },
-          boxShadow: {
-            'glow': '0 0 20px rgba(255, 31, 163, 0.3)',
-            'glow-lg': '0 0 40px rgba(255, 31, 163, 0.4)',
-            'card': '0 4px 24px rgba(0,0,0,0.4)',
-            'card-hover': '0 8px 40px rgba(0,0,0,0.6)',
-          }
-        }
-      }
-    }
-  </script>
   <style>
-    :root {
-      --bg-primary: #0a0a0a;
-      --bg-secondary: #111111;
-      --bg-card: #1a1a1a;
-      --bg-card-hover: #222222;
-      --border: rgba(255,255,255,0.07);
-      --text-primary: #f0f0f0;
-      --text-secondary: #888888;
-      --accent: #ff1fa3;
-      --accent-dim: rgba(255,31,163,0.15);
+    :root{
+      --bg:#080810;--surf:#0d0d1a;--card:#111122;--card2:#171730;
+      --bdr:rgba(255,255,255,0.06);--bdr2:rgba(255,255,255,0.11);
+      --txt:#e8e8ff;--txt2:#7878aa;--txt3:#4a4a70;
+      --acc:#ff0a94;--acc2:#ff75c6;--acc-d:rgba(255,10,148,0.12);--acc-g:rgba(255,10,148,0.28);
+      --blu:#4d8fff;--blu-d:rgba(77,143,255,0.12);
+      --grn:#00e5a0;--grn-d:rgba(0,229,160,0.12);
+      --gld:#ffd166;--gld-d:rgba(255,209,102,0.12);
+      --saf:env(safe-area-inset-bottom,0px);
     }
-    html[data-theme="light"] {
-      --bg-primary: #f5f5f5;
-      --bg-secondary: #ebebeb;
-      --bg-card: #ffffff;
-      --bg-card-hover: #f0f0f0;
-      --border: rgba(0,0,0,0.08);
-      --text-primary: #111111;
-      --text-secondary: #666666;
-      --accent: #d4007a;
-      --accent-dim: rgba(212,0,122,0.1);
+    html[data-theme="light"]{
+      --bg:#f0f0f8;--surf:#e8e8f5;--card:#ffffff;--card2:#f0f0ff;
+      --bdr:rgba(0,0,0,0.07);--bdr2:rgba(0,0,0,0.13);
+      --txt:#111130;--txt2:#555580;--acc:#d4006e;--acc2:#ff3aab;
+      --acc-d:rgba(212,0,110,0.1);--acc-g:rgba(212,0,110,0.22);
     }
+    *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+    html{scroll-behavior:smooth}
+    body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--txt);min-height:100dvh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+    ::-webkit-scrollbar{width:3px;height:3px}
+    ::-webkit-scrollbar-thumb{background:var(--acc);border-radius:99px}
+    ::-webkit-scrollbar-track{background:transparent}
+    .no-sb::-webkit-scrollbar{display:none}
+    .no-sb{-ms-overflow-style:none;scrollbar-width:none}
 
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--bg-primary);
-      color: var(--text-primary);
-      min-height: 100vh;
-      overflow-x: hidden;
-      transition: background 0.3s, color 0.3s;
-    }
-    .font-display { font-family: 'Syne', sans-serif; }
+    /* pages */
+    .page{display:none}
+    .page.active{display:block;animation:pagein .35s cubic-bezier(.16,1,.3,1)}
+    @keyframes pagein{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
-    /* Scrollbar */
-    ::-webkit-scrollbar { width: 4px; height: 4px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 99px; }
+    /* topbar */
+    #topbar{position:fixed;top:0;left:0;right:0;z-index:100;height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;background:rgba(8,8,16,0.88);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--bdr)}
+    html[data-theme="light"] #topbar{background:rgba(240,240,248,0.92)}
 
-    /* Skeleton */
-    .skeleton {
-      background: linear-gradient(90deg, var(--bg-card) 25%, var(--bg-card-hover) 50%, var(--bg-card) 75%);
-      background-size: 200% 100%;
-      animation: shimmer 1.5s infinite;
-    }
+    /* bottom nav */
+    #bottomnav{position:fixed;bottom:0;left:0;right:0;z-index:100;height:calc(64px + var(--saf));padding-bottom:var(--saf);background:rgba(8,8,16,0.92);backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);border-top:1px solid var(--bdr);display:flex}
+    html[data-theme="light"] #bottomnav{background:rgba(240,240,248,0.94)}
+    .nbtn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;background:none;border:none;padding:8px 0;position:relative;transition:.2s}
+    .nbtn svg{width:22px;height:22px;stroke:var(--txt2);transition:.25s;stroke-width:1.8;fill:none}
+    .nbtn span{font-size:10px;font-weight:600;color:var(--txt2);transition:.25s;letter-spacing:.02em}
+    .nbtn::after{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%) scaleX(0);width:28px;height:2.5px;border-radius:0 0 4px 4px;background:var(--acc);transition:transform .3s cubic-bezier(.16,1,.3,1)}
+    .nbtn.active::after{transform:translateX(-50%) scaleX(1)}
+    .nbtn.active svg{stroke:var(--acc);filter:drop-shadow(0 0 8px var(--acc-g))}
+    .nbtn.active span{color:var(--acc)}
 
-    /* Cards */
-    .anime-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s, background 0.2s;
-    }
-    .anime-card:hover {
-      transform: translateY(-4px) scale(1.01);
-      background: var(--bg-card-hover);
-      box-shadow: 0 16px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,31,163,0.15);
-    }
+    /* card */
+    .card{background:var(--card);border:1px solid var(--bdr);border-radius:16px;transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s,border-color .2s}
+    .card:hover{transform:translateY(-3px);box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 0 1px rgba(255,10,148,.1);border-color:rgba(255,10,148,.14)}
 
-    /* Bottom nav */
-    .bottom-nav {
-      background: rgba(10,10,10,0.85);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-top: 1px solid var(--border);
-    }
-    html[data-theme="light"] .bottom-nav {
-      background: rgba(245,245,245,0.92);
-    }
+    /* skeleton */
+    @keyframes shim{0%{background-position:-300% 0}100%{background-position:300% 0}}
+    .sk{background:linear-gradient(90deg,var(--card) 25%,var(--card2) 50%,var(--card) 75%);background-size:300% 100%;animation:shim 1.6s infinite;border-radius:8px}
 
-    /* Active nav */
-    .nav-item.active .nav-icon { color: var(--accent); }
-    .nav-item.active .nav-label { color: var(--accent); font-weight: 600; }
-    .nav-item.active .nav-indicator { opacity: 1; transform: scaleX(1); }
-    .nav-indicator {
-      height: 2px; border-radius: 99px;
-      background: var(--accent);
-      opacity: 0; transform: scaleX(0.4);
-      transition: all 0.25s cubic-bezier(0.16,1,0.3,1);
-      width: 24px; margin: 0 auto;
-    }
+    /* badges */
+    .b-acc{background:var(--acc-d);color:var(--acc);border:1px solid rgba(255,10,148,.22);border-radius:6px;font-size:10px;padding:2px 7px;font-weight:700}
+    .b-blu{background:var(--blu-d);color:var(--blu);border:1px solid rgba(77,143,255,.22);border-radius:6px;font-size:10px;padding:2px 7px;font-weight:700}
+    .b-grn{background:var(--grn-d);color:var(--grn);border:1px solid rgba(0,229,160,.22);border-radius:6px;font-size:10px;padding:2px 7px;font-weight:700}
+    .b-gld{background:var(--gld-d);color:var(--gld);border:1px solid rgba(255,209,102,.22);border-radius:6px;font-size:10px;padding:2px 7px;font-weight:700}
+    .b-gray{background:rgba(120,120,170,.1);color:var(--txt2);border:1px solid var(--bdr);border-radius:6px;font-size:10px;padding:2px 7px;font-weight:600}
 
-    /* Accent gradient text */
-    .gradient-text {
-      background: linear-gradient(135deg, #ff1fa3, #ff6eb4);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
+    /* gtext */
+    .gt{background:linear-gradient(135deg,#ff0a94,#ff75c6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .gt-b{background:linear-gradient(135deg,#4d8fff,#80b3ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .gt-g{background:linear-gradient(135deg,#00e5a0,#4dffc8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 
-    /* Pages */
-    .page { display: none; }
-    .page.active { display: block; }
+    /* buttons */
+    .btn-p{background:linear-gradient(135deg,#ff0a94,#c2006e);color:#fff;border:none;border-radius:12px;font-weight:700;font-size:14px;cursor:pointer;box-shadow:0 4px 20px var(--acc-g);transition:.2s;font-family:'Outfit',sans-serif}
+    .btn-p:hover{transform:translateY(-1px);box-shadow:0 8px 28px var(--acc-g)}
+    .btn-p:active{transform:scale(.97)}
+    .btn-s{background:var(--card2);color:var(--txt);border:1px solid var(--bdr2);border-radius:12px;font-weight:600;font-size:13px;cursor:pointer;transition:.2s;font-family:'Outfit',sans-serif}
+    .btn-s:hover{background:var(--card);border-color:var(--acc);color:var(--acc)}
 
-    /* Schedule tab */
-    .day-tab.active {
-      background: var(--accent);
-      color: white;
-    }
-    .day-tab {
-      background: var(--bg-card);
-      color: var(--text-secondary);
-      transition: all 0.2s;
-    }
+    /* search */
+    .s-inp{background:var(--card);border:1px solid var(--bdr2);color:var(--txt);border-radius:14px;width:100%;padding:11px 14px 11px 42px;font-size:14px;font-family:'Outfit',sans-serif;transition:.2s}
+    .s-inp:focus{outline:none;border-color:var(--acc);box-shadow:0 0 0 3px var(--acc-d)}
+    .s-inp::placeholder{color:var(--txt2)}
 
-    /* Genre badge */
-    .genre-badge {
-      background: var(--accent-dim);
-      color: var(--accent);
-      border: 1px solid rgba(255,31,163,0.2);
-    }
+    /* day tab */
+    .dtab{flex-shrink:0;padding:6px 14px;border-radius:99px;font-size:12px;font-weight:700;border:1px solid var(--bdr2);background:var(--card);color:var(--txt2);cursor:pointer;transition:.2s;white-space:nowrap}
+    .dtab.active{background:var(--acc);color:#fff;border-color:var(--acc);box-shadow:0 4px 14px var(--acc-g)}
 
-    /* Modal */
-    .modal-overlay {
-      background: rgba(0,0,0,0.85);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-    }
+    /* schedule card */
+    .sch-card{background:var(--card);border:1px solid var(--bdr);border-radius:16px;overflow:hidden;display:flex;gap:0;margin-bottom:10px;cursor:pointer;transition:all .3s cubic-bezier(.16,1,.3,1);position:relative}
+    .sch-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,#ff0a94,#c2006e);border-radius:3px 0 0 3px;opacity:0;transition:.2s}
+    .sch-card:hover{transform:translateX(4px) translateY(-1px);border-color:rgba(255,10,148,.2)}
+    .sch-card:hover::before{opacity:1}
 
-    /* Toast */
-    #toast-container {
-      position: fixed;
-      bottom: 80px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 9999;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      align-items: center;
-      pointer-events: none;
-    }
-    .toast {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      color: var(--text-primary);
-      padding: 10px 20px;
-      border-radius: 99px;
-      font-size: 13px;
-      font-weight: 500;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-      animation: slideUp 0.3s cubic-bezier(0.16,1,0.3,1);
-      white-space: nowrap;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .toast.hide { animation: slideDown 0.3s ease forwards; opacity: 0; }
+    /* anime poster card */
+    .ap-card{border-radius:14px;overflow:hidden;cursor:pointer;position:relative;background:var(--card);border:1px solid var(--bdr);transition:all .3s cubic-bezier(.16,1,.3,1)}
+    .ap-card:hover{transform:translateY(-5px) scale(1.02);box-shadow:0 22px 55px rgba(0,0,0,.65),0 0 32px var(--acc-g)}
+    .ap-card img{aspect-ratio:2/3;object-fit:cover;width:100%;display:block}
 
-    /* Rating stars */
-    .rating-bar {
-      background: linear-gradient(90deg, #ff1fa3, #ff6eb4);
-      transition: width 0.8s cubic-bezier(0.16,1,0.3,1);
-    }
+    /* upcoming card */
+    .up-card{background:var(--card);border:1px solid var(--bdr);border-radius:16px;overflow:hidden;cursor:pointer;margin-bottom:10px;transition:all .3s cubic-bezier(.16,1,.3,1)}
+    .up-card:hover{transform:translateX(4px);border-color:rgba(77,143,255,.25);box-shadow:0 8px 32px rgba(0,0,0,.4)}
 
-    /* Character avatar */
-    .char-avatar {
-      width: 48px; height: 48px;
-      border-radius: 50%;
-      overflow: hidden;
-      border: 2px solid var(--border);
-      cursor: pointer;
-      transition: border-color 0.2s, transform 0.2s;
-      flex-shrink: 0;
-    }
-    .char-avatar:hover {
-      border-color: var(--accent);
-      transform: scale(1.1);
-    }
-    .char-avatar img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-    }
+    /* rank card */
+    .rk-card{background:var(--card);border:1px solid var(--bdr);border-radius:14px;overflow:hidden;cursor:pointer;display:flex;align-items:center;gap:12px;padding:10px 12px;margin-bottom:8px;transition:all .25s cubic-bezier(.16,1,.3,1)}
+    .rk-card:hover{transform:translateX(4px);border-color:rgba(255,209,102,.22);box-shadow:0 8px 28px rgba(0,0,0,.35)}
 
-    /* Trailer embed */
-    .trailer-wrapper {
-      position: relative;
-      padding-bottom: 56.25%;
-      height: 0;
-      overflow: hidden;
-      border-radius: 12px;
-    }
-    .trailer-wrapper iframe {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      border: none;
-    }
+    /* track card */
+    .tk-card{background:var(--card);border:1px solid var(--bdr);border-radius:14px;overflow:hidden;display:flex;gap:12px;padding:10px;margin-bottom:8px;transition:all .25s}
+    .tk-card:hover{border-color:rgba(255,10,148,.18);transform:translateY(-1px)}
+    .ep-bar{height:3px;background:var(--card2);border-radius:99px;overflow:hidden;margin-top:6px}
+    .ep-fill{height:100%;background:linear-gradient(90deg,#ff0a94,#ff75c6);border-radius:99px}
 
-    /* Countdown badge */
-    .countdown-chip {
-      font-family: 'Syne', monospace;
-      font-size: 11px;
-      letter-spacing: 0.02em;
-    }
+    /* char avatar */
+    .ch-av{width:52px;height:52px;border-radius:50%;overflow:hidden;flex-shrink:0;border:2px solid var(--bdr2);cursor:pointer;transition:border-color .2s,transform .2s,box-shadow .2s}
+    .ch-av:hover{border-color:var(--acc);transform:scale(1.12);box-shadow:0 0 16px var(--acc-g)}
+    .ch-av img{width:100%;height:100%;object-fit:cover;object-position:top}
 
-    /* Sticky day header */
-    .sticky-day-header {
-      position: sticky;
-      top: 60px;
-      z-index: 10;
-      background: var(--bg-primary);
-      border-bottom: 1px solid var(--border);
-    }
+    /* modal */
+    .m-ov{position:fixed;inset:0;z-index:200;background:rgba(4,4,12,.9);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);display:none;overflow-y:auto}
+    .m-ov.open{display:flex;align-items:flex-end;justify-content:center}
+    @media(min-width:640px){.m-ov.open{align-items:center}}
+    .m-box{width:100%;max-width:680px;background:var(--surf);border-radius:24px 24px 0 0;overflow:hidden;animation:modalin .4s cubic-bezier(.16,1,.3,1);max-height:91dvh;overflow-y:auto;position:relative}
+    @media(min-width:640px){.m-box{border-radius:24px;max-height:88dvh}}
+    @keyframes modalin{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+    .ch-box{width:100%;max-width:380px;background:var(--surf);border-radius:24px;overflow:hidden;animation:scalein .35s cubic-bezier(.16,1,.3,1);position:relative}
+    @keyframes scalein{from{transform:scale(.88);opacity:0}to{transform:scale(1);opacity:1}}
 
-    /* Light mode card */
-    html[data-theme="light"] .anime-card {
-      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-    }
-    html[data-theme="light"] .anime-card:hover {
-      box-shadow: 0 8px 32px rgba(0,0,0,0.14);
-    }
+    /* toast */
+    #toast-wrap{position:fixed;bottom:76px;left:50%;transform:translateX(-50%);z-index:9999;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none;width:calc(100% - 40px);max-width:300px}
+    .toast{background:var(--card2);border:1px solid var(--bdr2);color:var(--txt);padding:10px 18px;border-radius:99px;font-size:13px;font-weight:600;box-shadow:0 8px 30px rgba(0,0,0,.55);animation:tin .3s cubic-bezier(.16,1,.3,1);display:flex;align-items:center;gap:8px;white-space:nowrap}
+    @keyframes tin{from{transform:translateY(12px);opacity:0}to{transform:none;opacity:1}}
+    @keyframes tout{to{transform:translateY(8px);opacity:0}}
+    .toast.out{animation:tout .25s ease forwards}
 
-    /* Favorite heart */
-    .fav-btn.active svg { fill: var(--accent); color: var(--accent); }
+    /* fav */
+    .fav-btn svg{transition:.2s}
+    .fav-btn.faved svg{fill:var(--acc);stroke:var(--acc);filter:drop-shadow(0 0 6px var(--acc-g))}
 
-    /* Search bar */
-    .search-bar {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      color: var(--text-primary);
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-    .search-bar:focus {
-      outline: none;
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px var(--accent-dim);
-    }
-    .search-bar::placeholder { color: var(--text-secondary); }
+    /* trailer */
+    .tv-wrap{position:relative;padding-bottom:56.25%;border-radius:14px;overflow:hidden}
+    .tv-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
 
-    /* Profile card */
-    .profile-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-    }
+    /* rating bar */
+    .rb-fill{background:linear-gradient(90deg,#ff0a94,#ff75c6);height:100%;border-radius:99px;transition:width 1s cubic-bezier(.16,1,.3,1)}
 
-    /* Ongoing poster */
-    .ongoing-poster {
-      aspect-ratio: 2/3;
-      object-fit: cover;
-    }
+    /* sort/filter */
+    .s-btn{padding:6px 14px;border-radius:99px;font-size:12px;font-weight:700;border:1px solid var(--bdr2);background:var(--card);color:var(--txt2);cursor:pointer;transition:.2s;white-space:nowrap;font-family:'Outfit',sans-serif}
+    .s-btn.active{background:var(--acc);color:#fff;border-color:var(--acc)}
+    .g-chip{padding:5px 12px;border-radius:99px;font-size:11px;font-weight:700;border:1px solid var(--bdr2);background:var(--card);color:var(--txt2);cursor:pointer;transition:.2s;flex-shrink:0;font-family:'Outfit',sans-serif}
+    .g-chip.active{background:var(--acc-d);border-color:rgba(255,10,148,.4);color:var(--acc)}
 
-    /* Infinite scroll sentinel */
-    #scroll-sentinel { height: 1px; }
+    /* atab */
+    .atab{padding:12px 18px;font-size:13px;font-weight:700;border-bottom:2px solid transparent;background:none;border-top:none;border-left:none;border-right:none;cursor:pointer;flex-shrink:0;transition:.2s;white-space:nowrap;color:var(--txt2);font-family:'Outfit',sans-serif}
+    .atab.active{color:var(--acc);border-bottom-color:var(--acc)}
 
-    /* Scroll container */
-    .main-scroll {
-      height: calc(100vh - 64px);
-      overflow-y: auto;
-      scroll-behavior: smooth;
-    }
+    /* profile */
+    .ph-bg{background:linear-gradient(135deg,rgba(255,10,148,.18) 0%,rgba(77,143,255,.1) 60%,transparent 100%);border-bottom:1px solid var(--bdr)}
+    .st-box{background:var(--card2);border:1px solid var(--bdr);border-radius:14px;text-align:center;padding:14px 10px}
 
-    /* Header gradient */
-    .header-bg {
-      background: linear-gradient(135deg, rgba(255,31,163,0.15) 0%, transparent 60%);
-    }
+    /* rec card */
+    .rc-card{width:110px;flex-shrink:0;border-radius:12px;overflow:hidden;cursor:pointer;background:var(--card);border:1px solid var(--bdr);transition:.25s}
+    .rc-card:hover{transform:scale(1.05);border-color:rgba(255,10,148,.2)}
+    .rc-card img{aspect-ratio:2/3;object-fit:cover;width:100%;display:block}
 
-    /* Live clock */
-    #live-clock {
-      font-family: 'Syne', monospace;
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-    }
+    /* clock */
+    #live-clock{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.06em;color:var(--txt2)}
 
-    /* Airing status */
-    .status-airing { background: rgba(34,197,94,0.15); color: #22c55e; border: 1px solid rgba(34,197,94,0.3); }
-    .status-upcoming { background: rgba(59,130,246,0.15); color: #60a5fa; border: 1px solid rgba(59,130,246,0.3); }
-    .status-done { background: rgba(107,114,128,0.15); color: #9ca3af; border: 1px solid rgba(107,114,128,0.2); }
+    /* main content */
+    .main-wrap{padding-top:56px;padding-bottom:calc(72px + var(--saf))}
 
-    /* Multi select genre filter */
-    .genre-filter-btn {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      color: var(--text-secondary);
-      transition: all 0.2s;
-    }
-    .genre-filter-btn.active {
-      background: var(--accent-dim);
-      border-color: var(--accent);
-      color: var(--accent);
-    }
+    /* anime sticky */
+    .anime-hdr{position:sticky;top:56px;z-index:50;background:rgba(8,8,16,.94);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--bdr);padding:10px 16px}
+    html[data-theme="light"] .anime-hdr{background:rgba(240,240,248,.95)}
 
-    /* Sort btn */
-    .sort-btn.active { background: var(--accent); color: white; }
-    .sort-btn {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      color: var(--text-secondary);
-      transition: all 0.2s;
-    }
+    /* translated pill */
+    .tr-pill{background:rgba(0,229,160,.1);color:#00e5a0;border:1px solid rgba(0,229,160,.22);border-radius:6px;font-size:9px;padding:1px 6px;font-weight:700;letter-spacing:.04em;margin-left:4px}
+
+    @keyframes spin{to{transform:rotate(360deg)}}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+    .spinner{width:28px;height:28px;border-radius:50%;border:2.5px solid var(--card2);border-top-color:var(--acc);animation:spin .7s linear infinite}
+    .dot-pulse{width:7px;height:7px;border-radius:50%;background:var(--grn);box-shadow:0 0 7px var(--grn);animation:pulse 2s infinite}
   </style>
 </head>
 <body>
 
-<!-- Toast Container -->
-<div id="toast-container"></div>
-
-<!-- Live Clock Bar -->
-<div id="top-bar" class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-2 border-b header-bg" style="border-color:var(--border);background:rgba(10,10,10,0.9);backdrop-filter:blur(12px);">
-  <div class="flex items-center gap-2">
-    <span class="font-display font-bold text-base gradient-text">NekoTime</span>
-    <span class="text-xs px-2 py-0.5 rounded-full genre-badge font-semibold">LIVE</span>
+<!-- TOPBAR -->
+<header id="topbar">
+  <div style="display:flex;align-items:center;gap:10px">
+    <div style="width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#ff0a94,#c2006e);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px var(--acc-g)">
+      <span style="font-size:18px;line-height:1">🐱</span>
+    </div>
+    <span style="font-size:20px;font-weight:900;letter-spacing:-.03em" class="gt">NekoTime</span>
   </div>
-  <div class="flex items-center gap-3">
-    <span id="live-clock" class="text-xs" style="color:var(--text-secondary)"></span>
-    <button id="theme-toggle" class="w-8 h-8 rounded-full flex items-center justify-center transition-all hover:scale-110" style="background:var(--bg-card);border:1px solid var(--border);">
-      <svg id="theme-icon-dark" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
-      </svg>
-      <svg id="theme-icon-light" class="w-4 h-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-        <circle cx="12" cy="12" r="5"/><path stroke-linecap="round" d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
-      </svg>
-    </button>
+  <div style="display:flex;align-items:center;gap:8px">
+    <div style="display:flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--bdr);border-radius:10px;padding:5px 10px">
+      <div class="dot-pulse"></div>
+      <span id="live-clock">--:--:--</span>
+    </div>
+    <button id="theme-toggle" style="width:36px;height:36px;border-radius:10px;background:var(--card);border:1px solid var(--bdr);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:.2s" title="Toggle theme">🌙</button>
   </div>
-</div>
+</header>
 
-<!-- Main Content -->
-<div class="pt-[44px] pb-[64px]">
+<div class="main-wrap">
 
-  <!-- JADWAL PAGE -->
-  <div id="page-jadwal" class="page active">
-    <!-- Search & header -->
-    <div class="px-4 pt-4 pb-2">
-      <h1 class="font-display font-bold text-xl mb-3">Jadwal Tayang</h1>
-      <!-- Day filter tabs -->
-      <div class="flex gap-2 overflow-x-auto pb-2 no-scrollbar" id="day-tabs">
-        <!-- Filled by JS -->
-      </div>
-    </div>
-    <!-- Schedule list -->
-    <div id="schedule-list" class="px-4 pb-4"></div>
-  </div>
-
-  <!-- ANIME PAGE -->
-  <div id="page-anime" class="page">
-    <!-- Search -->
-    <div class="px-4 pt-4 pb-2 sticky top-[44px] z-20" style="background:var(--bg-primary);">
-      <div class="relative mb-3">
-        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style="color:var(--text-secondary)" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="m21 21-4.35-4.35"/>
-        </svg>
-        <input id="search-input" type="text" placeholder="Cari anime..." class="search-bar w-full pl-9 pr-4 py-2.5 rounded-xl text-sm" />
-      </div>
-      <!-- Genre filter -->
-      <div class="flex gap-2 overflow-x-auto pb-1 no-scrollbar" id="genre-filters">
-        <!-- Filled by JS -->
-      </div>
-    </div>
-
-    <!-- Sort bar -->
-    <div class="px-4 pb-3 flex items-center gap-2">
-      <span class="text-xs font-medium" style="color:var(--text-secondary)">Sort:</span>
-      <button class="sort-btn active text-xs px-3 py-1 rounded-full font-medium" data-sort="POPULARITY_DESC">Populer</button>
-      <button class="sort-btn text-xs px-3 py-1 rounded-full font-medium" data-sort="SCORE_DESC">Rating</button>
-      <button class="sort-btn text-xs px-3 py-1 rounded-full font-medium" data-sort="TRENDING_DESC">Trending</button>
-    </div>
-
-    <!-- Tabs: Ongoing / Upcoming -->
-    <div class="px-4 flex gap-1 mb-4">
-      <button id="tab-ongoing" class="flex-1 py-2 rounded-xl text-sm font-semibold transition-all" style="background:var(--accent);color:white;">Ongoing</button>
-      <button id="tab-upcoming" class="flex-1 py-2 rounded-xl text-sm font-semibold transition-all" style="background:var(--bg-card);color:var(--text-secondary)">Upcoming</button>
-    </div>
-
-    <!-- Search results -->
-    <div id="search-results" class="px-4 pb-4 hidden"></div>
-
-    <!-- Ongoing list -->
-    <div id="ongoing-list" class="px-4 pb-4 grid grid-cols-2 gap-3"></div>
-
-    <!-- Upcoming list -->
-    <div id="upcoming-list" class="px-4 pb-4 hidden"></div>
-    <div id="scroll-sentinel"></div>
-    <div id="load-more-spinner" class="hidden flex justify-center py-6">
-      <div class="w-6 h-6 border-2 rounded-full animate-spin" style="border-color:var(--bg-card);border-top-color:var(--accent);"></div>
-    </div>
-  </div>
-
-  <!-- PROFILE PAGE -->
-  <div id="page-profile" class="page">
-    <div class="px-4 pt-6">
-      <!-- Profile header -->
-      <div class="profile-card rounded-2xl p-6 mb-4 text-center">
-        <div class="relative inline-block mb-4">
-          <img src="owner.jpg" onerror="this.src='https://api.dicebear.com/7.x/pixel-art/svg?seed=OblivionX&backgroundColor=1a1a2e'" alt="OblivionX" class="w-24 h-24 rounded-full object-cover mx-auto border-4" style="border-color:var(--accent);" />
-          <div class="absolute -bottom-1 -right-1 w-7 h-7 rounded-full flex items-center justify-center" style="background:var(--accent);">
-            <svg class="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-            </svg>
-          </div>
-        </div>
-        <h2 class="font-display font-bold text-2xl mb-1">Clara & Xelion</h2>
-        <p class="text-sm mb-1" style="color:var(--accent)">@Clara&Xelion</p>
-        <p class="text-sm leading-relaxed" style="color:var(--text-secondary)">Anime enthusiast & developer. Building the best anime experience, one frame at a time. 🌸</p>
-
-        <!-- Stats -->
-        <div class="grid grid-cols-3 gap-2 mt-5">
-          <div class="rounded-xl py-3" style="background:var(--bg-secondary);">
-            <div class="font-display font-bold text-lg gradient-text" id="fav-count">0</div>
-            <div class="text-xs" style="color:var(--text-secondary)">Favorit</div>
-          </div>
-          <div class="rounded-xl py-3" style="background:var(--bg-secondary);">
-            <div class="font-display font-bold text-lg gradient-text">∞</div>
-            <div class="text-xs" style="color:var(--text-secondary)">Ditonton</div>
-          </div>
-          <div class="rounded-xl py-3" style="background:var(--bg-secondary);">
-            <div class="font-display font-bold text-lg gradient-text">S+</div>
-            <div class="text-xs" style="color:var(--text-secondary)">Level</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Buttons -->
-      <div class="space-y-3 mb-6">
-        <a href="https://wa.me/6288973461209" target="_blank" class="flex items-center justify-center gap-3 w-full py-3 rounded-xl font-semibold text-sm transition-all active:scale-95" style="background:linear-gradient(135deg,#25D366,#128C7E);color:white;">
-          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-          </svg>
-          Chat via WhatsApp
-        </a>
-        <button id="copy-btn" class="flex items-center justify-center gap-3 w-full py-3 rounded-xl font-semibold text-sm transition-all active:scale-95" style="background:var(--bg-card);border:1px solid var(--border);color:var(--text-primary);">
-          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path stroke-linecap="round" d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
-          </svg>
-          Copy Nomor HP
-        </button>
-        <button id="share-btn" class="flex items-center justify-center gap-3 w-full py-3 rounded-xl font-semibold text-sm transition-all active:scale-95" style="background:var(--bg-card);border:1px solid var(--border);color:var(--text-primary);">
-          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
-            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
-          </svg>
-          Share Website
-        </button>
-      </div>
-
-      <!-- Favorites section -->
+<!-- ══════ JADWAL PAGE ══════ -->
+<div id="page-jadwal" class="page active">
+  <div style="padding:16px 16px 10px">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px">
       <div>
-        <h3 class="font-display font-bold text-base mb-3">Anime Favorit</h3>
-        <div id="fav-list" class="grid grid-cols-3 gap-2"></div>
-        <p id="fav-empty" class="text-sm text-center py-8" style="color:var(--text-secondary)">Belum ada favorit. Tambahkan dari halaman Anime! ❤️</p>
+        <h1 style="font-size:24px;font-weight:900;letter-spacing:-.03em">Jadwal Tayang</h1>
+        <p style="font-size:12px;color:var(--txt2);margin-top:2px">Waktu Indonesia Barat (UTC+7)</p>
       </div>
+      <span id="today-badge" class="b-acc" style="font-size:11px;padding:5px 12px;margin-top:3px;border-radius:99px"></span>
     </div>
+    <div id="day-tabs" style="display:flex;gap:8px;overflow-x:auto;padding-bottom:6px" class="no-sb"></div>
   </div>
-
+  <div id="sch-list" style="padding:0 16px 16px"></div>
 </div>
 
-<!-- Bottom Navigation -->
-<nav class="bottom-nav fixed bottom-0 left-0 right-0 z-50 flex items-stretch" style="height:64px;">
-  <button class="nav-item active flex-1 flex flex-col items-center justify-center gap-0.5 pt-1.5 pb-2" data-page="jadwal">
-    <div class="nav-indicator"></div>
-    <svg class="nav-icon w-5 h-5" style="color:var(--text-secondary)" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
-    </svg>
-    <span class="nav-label text-[10px] font-medium" style="color:var(--accent);">Jadwal</span>
+<!-- ══════ ANIME PAGE ══════ -->
+<div id="page-anime" class="page">
+  <!-- Sticky header -->
+  <div class="anime-hdr">
+    <div style="position:relative;margin-bottom:10px">
+      <svg style="position:absolute;left:13px;top:50%;transform:translateY(-50%);width:17px;height:17px;color:var(--txt2);pointer-events:none" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="m21 21-4.35-4.35"/></svg>
+      <input id="search-inp" type="text" placeholder="Cari anime, genre, studio…" class="s-inp"/>
+      <span id="s-clear" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);cursor:pointer;color:var(--txt2);display:none;font-size:20px;line-height:1;transition:.2s" onclick="clearSearch()">×</span>
+    </div>
+    <div style="display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;align-items:center" class="no-sb">
+      <button class="s-btn active" data-sort="POPULARITY_DESC">🔥 Populer</button>
+      <button class="s-btn" data-sort="SCORE_DESC">⭐ Rating</button>
+      <button class="s-btn" data-sort="TRENDING_DESC">📈 Trending</button>
+      <div style="width:1px;height:20px;background:var(--bdr);flex-shrink:0"></div>
+      <button id="genre-btn" class="s-btn" style="display:flex;align-items:center;gap:5px">🏷 Genre <span id="g-count" style="display:none;background:var(--acc);color:#fff;border-radius:50%;width:16px;height:16px;font-size:9px;align-items:center;justify-content:center;font-weight:800">0</span></button>
+    </div>
+    <div id="genre-wrap" style="display:none;flex-wrap:wrap;gap:6px;padding-top:10px" id="genre-chips"></div>
+  </div>
+
+  <!-- Anime sub-tabs -->
+  <div style="display:flex;border-bottom:1px solid var(--bdr);overflow-x:auto;background:var(--bg)" class="no-sb">
+    <button class="atab active" data-atab="ongoing">▶ Ongoing</button>
+    <button class="atab" data-atab="upcoming">🔜 Upcoming</button>
+    <button class="atab" data-atab="charts">🏆 Top Charts</button>
+    <button class="atab" data-atab="tracker">📋 Tracker</button>
+  </div>
+
+  <!-- Search results -->
+  <div id="search-panel" style="padding:14px 16px;display:none"></div>
+
+  <!-- Ongoing -->
+  <div id="tab-ongoing" style="padding:14px 16px">
+    <div id="ongoing-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px"></div>
+  </div>
+
+  <!-- Upcoming -->
+  <div id="tab-upcoming" style="padding:14px 16px;display:none">
+    <div id="upcoming-list"></div>
+    <div id="up-sentinel" style="height:1px"></div>
+    <div id="up-spin" style="display:none;justify-content:center;padding:24px"><div class="spinner"></div></div>
+  </div>
+
+  <!-- Charts -->
+  <div id="tab-charts" style="padding:14px 16px;display:none">
+    <div style="display:flex;gap:8px;margin-bottom:14px;overflow-x:auto" class="no-sb" id="chart-sort-row">
+      <button class="s-btn active" data-chart="SCORE_DESC">⭐ Skor</button>
+      <button class="s-btn" data-chart="POPULARITY_DESC">🔥 Populer</button>
+      <button class="s-btn" data-chart="TRENDING_DESC">📈 Trending</button>
+      <button class="s-btn" data-chart="FAVOURITES_DESC">❤️ Disukai</button>
+    </div>
+    <div id="charts-list"></div>
+  </div>
+
+  <!-- Tracker -->
+  <div id="tab-tracker" style="padding:14px 16px;display:none">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+      <h2 style="font-size:18px;font-weight:800">Watch Tracker</h2>
+      <button onclick="clearTracker()" class="btn-s" style="padding:6px 14px;font-size:12px">🗑 Reset</button>
+    </div>
+    <div id="tracker-list"></div>
+    <p id="tracker-empty" style="text-align:center;padding:48px 0;color:var(--txt2);font-size:14px;line-height:2">📋 Belum ada anime di tracker.<br><span style="font-size:12px;opacity:.7">Tambah dari halaman detail anime.</span></p>
+  </div>
+</div>
+
+<!-- ══════ PROFILE PAGE ══════ -->
+<div id="page-profile" class="page">
+  <div class="ph-bg" style="padding:28px 20px 24px;text-align:center">
+    <div style="position:relative;display:inline-block;margin-bottom:16px">
+      <div style="width:92px;height:92px;border-radius:50%;padding:3px;background:linear-gradient(135deg,#ff0a94,#4d8fff);margin:0 auto">
+        <img src="owner.jpg" onerror="this.src='https://api.dicebear.com/7.x/bottts-neutral/svg?seed=OblivionX&backgroundColor=111122'" alt="OblivionX" style="width:100%;height:100%;border-radius:50%;object-fit:cover;border:3px solid var(--surf)"/>
+      </div>
+      <div style="position:absolute;bottom:2px;right:2px;width:24px;height:24px;border-radius:50%;background:var(--grn);border:3px solid var(--surf);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#000">✓</div>
+    </div>
+    <h2 style="font-size:26px;font-weight:900;letter-spacing:-.02em;margin-bottom:3px">OblivionX</h2>
+    <p style="font-size:13px;font-weight:700;margin-bottom:8px" class="gt">@oblivionx</p>
+    <p style="font-size:13px;color:var(--txt2);line-height:1.6;max-width:280px;margin:0 auto">Anime enthusiast & developer. Building the best anime experience, one frame at a time. 🌸</p>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:20px">
+      <div class="st-box"><div style="font-size:22px;font-weight:900" class="gt" id="stat-fav">0</div><div style="font-size:11px;color:var(--txt2);margin-top:2px">Favorit</div></div>
+      <div class="st-box"><div style="font-size:22px;font-weight:900" class="gt-b" id="stat-track">0</div><div style="font-size:11px;color:var(--txt2);margin-top:2px">Ditonton</div></div>
+      <div class="st-box"><div style="font-size:22px;font-weight:900;background:linear-gradient(135deg,#ffd166,#ff9f1c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">S+</div><div style="font-size:11px;color:var(--txt2);margin-top:2px">Level</div></div>
+    </div>
+  </div>
+  <div style="padding:16px">
+    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:22px">
+      <a href="https://wa.me/6288973461209" target="_blank" class="btn-p" style="display:flex;align-items:center;justify-content:center;gap:10px;padding:14px;text-decoration:none;font-size:15px">
+        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Chat via WhatsApp
+      </a>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <button id="copy-btn" class="btn-s" style="padding:13px;display:flex;align-items:center;justify-content:center;gap:8px">
+          <svg width="17" height="17" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path stroke-linecap="round" d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy Nomor
+        </button>
+        <button id="share-btn" class="btn-s" style="padding:13px;display:flex;align-items:center;justify-content:center;gap:8px">
+          <svg width="17" height="17" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>Share
+        </button>
+      </div>
+    </div>
+    <div style="margin-bottom:20px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+        <h3 style="font-size:16px;font-weight:800">❤️ Anime Favorit</h3>
+        <span id="fav-count-txt" style="font-size:12px;color:var(--txt2)">0 anime</span>
+      </div>
+      <div id="fav-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px"></div>
+      <p id="fav-empty" style="text-align:center;padding:32px 0;color:var(--txt2);font-size:13px">Tambahkan dari halaman Anime ❤️</p>
+    </div>
+    <div style="background:var(--card);border:1px solid var(--bdr);border-radius:16px;padding:16px;text-align:center;margin-bottom:16px">
+      <div style="font-size:28px;margin-bottom:6px">🐱</div>
+      <p style="font-size:13px;font-weight:800;margin-bottom:3px">NekoTime v2.0</p>
+      <p style="font-size:11px;color:var(--txt2)">Powered by AniList GraphQL API • Made with ❤️ by OblivionX</p>
+    </div>
+  </div>
+</div>
+
+</div><!-- end main-wrap -->
+
+<!-- BOTTOM NAV -->
+<nav id="bottomnav">
+  <button class="nbtn active" data-page="jadwal">
+    <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    <span>Jadwal</span>
   </button>
-  <button class="nav-item flex-1 flex flex-col items-center justify-center gap-0.5 pt-1.5 pb-2" data-page="anime">
-    <div class="nav-indicator"></div>
-    <svg class="nav-icon w-5 h-5" style="color:var(--text-secondary)" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-      <polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
-    </svg>
-    <span class="nav-label text-[10px] font-medium" style="color:var(--text-secondary)">Anime</span>
+  <button class="nbtn" data-page="anime">
+    <svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+    <span>Anime</span>
   </button>
-  <button class="nav-item flex-1 flex flex-col items-center justify-center gap-0.5 pt-1.5 pb-2" data-page="profile">
-    <div class="nav-indicator"></div>
-    <svg class="nav-icon w-5 h-5" style="color:var(--text-secondary)" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-      <path stroke-linecap="round" d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>
-    </svg>
-    <span class="nav-label text-[10px] font-medium" style="color:var(--text-secondary)">Profile</span>
+  <button class="nbtn" data-page="profile">
+    <svg viewBox="0 0 24 24"><path stroke-linecap="round" d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    <span>Profil</span>
   </button>
 </nav>
 
-<!-- Anime Detail Modal -->
-<div id="anime-modal" class="modal-overlay fixed inset-0 z-[100] hidden overflow-y-auto">
-  <div class="min-h-full flex items-end sm:items-center justify-center p-0 sm:p-4">
-    <div id="anime-modal-content" class="relative w-full sm:max-w-2xl rounded-t-3xl sm:rounded-3xl overflow-hidden animate-scale-in" style="background:var(--bg-secondary);max-height:90vh;overflow-y:auto;">
-      <button id="close-anime-modal" class="absolute top-4 right-4 z-10 w-9 h-9 rounded-full flex items-center justify-center" style="background:rgba(0,0,0,0.5);">
-        <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/>
-        </svg>
-      </button>
-      <div id="anime-modal-inner"></div>
-    </div>
+<div id="toast-wrap"></div>
+
+<!-- ANIME DETAIL MODAL -->
+<div id="anime-modal" class="m-ov">
+  <div class="m-box" id="anime-modal-box">
+    <button id="close-amodal" onclick="closeModal('anime-modal')" style="position:absolute;top:14px;right:14px;z-index:20;width:38px;height:38px;border-radius:50%;background:rgba(0,0,0,.65);border:1px solid rgba(255,255,255,.1);cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;font-size:22px;line-height:1;backdrop-filter:blur(8px)">×</button>
+    <div id="anime-modal-inner" style="min-height:300px"></div>
   </div>
 </div>
 
-<!-- Character Modal -->
-<div id="char-modal" class="modal-overlay fixed inset-0 z-[200] hidden flex items-center justify-center p-4">
-  <div id="char-modal-content" class="relative w-full max-w-sm rounded-3xl overflow-hidden animate-scale-in" style="background:var(--bg-secondary);">
-    <button id="close-char-modal" class="absolute top-4 right-4 z-10 w-9 h-9 rounded-full flex items-center justify-center" style="background:rgba(0,0,0,0.5);">
-      <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-        <path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/>
-      </svg>
-    </button>
+<!-- CHARACTER MODAL -->
+<div id="char-modal" class="m-ov" style="align-items:center;justify-content:center;padding:20px">
+  <div class="ch-box" id="char-modal-box">
+    <button onclick="closeModal('char-modal')" style="position:absolute;top:14px;right:14px;z-index:20;width:34px;height:34px;border-radius:50%;background:rgba(0,0,0,.65);border:none;cursor:pointer;color:#fff;font-size:20px;line-height:1;display:flex;align-items:center;justify-content:center">×</button>
     <div id="char-modal-inner"></div>
   </div>
 </div>
